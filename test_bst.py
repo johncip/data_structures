@@ -1,19 +1,19 @@
-from unittest import main, TestCase, skip
+from unittest import main, TestCase
 
-from bt import Bt
+from bst import BST
 
 
-class TestBt(TestCase):
+class TestBst(TestCase):
     def setUp(self):
-        self.bt = Bt(4)
+        self.bt = BST(4)
         [self.bt.add(e) for e in [2, 6, 3, 1, 5]]
 
     def test_inorder(self):
         self.assertEqual(self.bt.inorder(), range(1, 7))
 
     def test_unique_queue(self):
-        Bt(1)
-        self.assertEqual(Bt(2).inorder(), [2])
+        BST(1)
+        self.assertEqual(BST(2).inorder(), [2])
 
     def test_floor(self):
         x = self.bt
@@ -61,7 +61,6 @@ class TestBt(TestCase):
         for i in [5, 3, 1, 2, 6, 4]:
             self.bt.delete(i)
         self.assertEqual(self.bt.inorder(), [])
-
 
 
 if __name__ == '__main__':

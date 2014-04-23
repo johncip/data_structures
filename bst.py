@@ -18,7 +18,7 @@ class Node:
         return str(self.key)
 
 
-class Bt:
+class BST:
     """
     An unbalanced binary tree.
     """
