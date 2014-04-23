@@ -60,21 +60,21 @@ class BST:
 
     def _print_level(self, node, level):
         if not node:
-            return
+            return ""
         if level == 1:
-            print node.key,
+            return str(node.key) + " "
         else:
-            self._print_level(node.left, level - 1)
-            self._print_level(node.right, level - 1)
+            left = self._print_level(node.left, level - 1)
+            right = self._print_level(node.right, level - 1)
+            return str(left) + str(right)
 
     def level_order(self):
         """
         Level-order print.
         """
-        height = self._height(self.root)
-        for level in range(1, height + 1):
-            self._print_level(self.root, level)
-            print
+        maxh = self._height(self.root) + 1
+        levels = [self._print_level(self.root, level) for level in range(1, maxh)]
+        return "\n".join(levels)
 
     def height(self):
         """
