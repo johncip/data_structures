@@ -17,15 +17,13 @@ def rbt():
 @pytest.fixture
 def s_node(rbt):
     res = rbt._get(rbt.root, 's')
-    assert res.left.key == 'j'
-    assert res.right.key == 'z'
 
     return res
 
 
 def test_has_right_red(rbt, s_node):
     assert not rbt._has_right_red()
-    s_node.red = True
+    rbt.root.right.red = True
     assert rbt._has_right_red()
 
     rbt.root = rbt._rotate_left(rbt.root)
@@ -36,26 +34,28 @@ def test_has_right_red(rbt, s_node):
 
 
 def test_rotate_left(rbt, s_node):
-    s_node.red = True
-    rbt.root = rbt._rotate_left(rbt.root)
+    root = rbt.root
+    right = root.right
+    right.red = True
 
-    assert s_node.left.key == 'e'
-    assert s_node.right.key == 'z'
+    rbt.root = rbt._rotate_left(root)
+    assert right is rbt.root
+    assert root is rbt.root.left
 
-    e_node = rbt._get(rbt.root, 'e')
-    assert e_node.left.key == 'a'
-    assert e_node.right.key == 'j'
+    pass
 
 
 def test_rotate_right(rbt, s_node):
-    a_node = rbt._get(rbt.root, 'a')
-    a_node.red = True
-    rbt.root = rbt._rotate_right(rbt.root)
-    assert rbt.root.key == 'a'
+    root = rbt.root
+    left = root.left
+    left.red = True
+
+    rbt.root = rbt._rotate_right(root)
+    assert left is rbt.root
+    assert root is rbt.root.right
 
 
 def test_flip_color(rbt):
-    # TODO better test
     root = rbt.root
     root.left.red = True
     root.right.red = True

@@ -16,10 +16,7 @@ class Node(object):
         self.left = None
         self.right = None
         self.value = None
-        self.red = False
-
-        if kwargs.has_key('red'):
-            self.red = kwargs['red']
+        self.red = kwargs['red'] if 'red' in kwargs else False
 
     def __str__(self):
         return str(self.key)
