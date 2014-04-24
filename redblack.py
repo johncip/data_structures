@@ -11,8 +11,6 @@ Invariant: no node has two red links
 """
 
 # TODO check invariant on rotations
-# TODO implement symmetric order check (for base class)
-
 
 from bst import BST, Node
 
@@ -25,6 +23,19 @@ class RedBlack(BST):
     def __init__(self, k):
         super(RedBlack, self).__init__(k)
         self.root = Node(k)
+
+    #--------------------------------------------------------------------------
+    # Color changes
+    #--------------------------------------------------------------------------
+
+    def _color_flip(self, node):
+        assert not node.red
+        assert node.left.red
+        assert node.right.red
+
+        node.red = True
+        node.left.red = False
+        node.right.red = False
 
     def _rotate_left(self, node):
         x = node.right
@@ -45,6 +56,10 @@ class RedBlack(BST):
         x.red = node.red
         node.red = True
         return x
+
+    #--------------------------------------------------------------------------
+    # Contract checks
+    #--------------------------------------------------------------------------
 
     def _has_right_red(self, node=None):
         """
