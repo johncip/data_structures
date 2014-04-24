@@ -26,6 +26,13 @@ class BST:
     def __init__(self, k):
         self.root = Node(k)
 
+    def __str__(self, k):
+        return self.level_order()
+
+    #-------------------------------------------------------------------------
+    # Implementations
+    #-------------------------------------------------------------------------
+
     def _add(self, k, node):
         """
         Adds a key to the tree rooted at node.
