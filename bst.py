@@ -9,9 +9,11 @@ class Node:
     """
     A binary tree node.
     """
-    key = None
+
     left = None
     right = None
+    value = None
+    red = False  # color of parent link
 
     def __init__(self, k):
         self.key = k
@@ -20,32 +22,36 @@ class Node:
         return str(self.key)
 
 
-class BST:
+class BST(object):
     """
     A binary search tree.
     """
 
     def __init__(self, k):
+        """
+        Creates a new BST with root containing key k.
+        """
         self.root = Node(k)
 
-    def __str__(self, k):
+    def __str__(self):
         return self.level_order()
 
     #-------------------------------------------------------------------------
     # Implementations
     #-------------------------------------------------------------------------
 
-    def _add(self, k, node):
+    def _add(self, node, k):
         """
-        Adds a key to the tree rooted at node.
+        Adds a node with key k to the subtree rooted at node.
+        Note: returns parent if parent exists, else new node.
         """
         if not node:
             return Node(k)
         if k < node.key:
-            node.left = self._add(k, node.left)
+            node.left = self._add(node.left, k)
             return node
         elif k > node.key:
-            node.right = self._add(k, node.right)
+            node.right = self._add(node.right, k)
             return node
         else:  # k == node.key
             return node
@@ -124,6 +130,9 @@ class BST:
             return rf if rf else node.key
 
     def _get(self, node, k):
+        """
+        Returns the node with key k from the subtree rooted at node.
+        """
         if not node:
             return None
 
@@ -179,9 +188,9 @@ class BST:
 
     def add(self, k):
         """
-        Adds an entry to the bst instance.
+        Adds an entry to the bst instance and returns the node.
         """
-        self._add(k, self.root)
+        return self._add(self.root, k)
 
     def ceil(self, k):
         """
@@ -209,9 +218,9 @@ class BST:
 
     def get(self, k):
         """
-        Returns the node with key k.
+        Returns the value at key k.
         """
-        return self._get(self.root, k)
+        return self._get(self.root, k).value
 
     def height(self):
         """

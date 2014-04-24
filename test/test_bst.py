@@ -49,9 +49,9 @@ def test_ceil(bst):
 
 
 def test_get(bst):
-    assert bst.get(4) is bst.root
+    assert bst._get(bst.root, bst.root.key) is bst.root
     for i in range(1, 7):
-        assert bst.get(i).key == i
+        assert bst._get(bst.root, i).key == i
 
 
 def test_height(bst):
