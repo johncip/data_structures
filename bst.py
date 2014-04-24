@@ -5,7 +5,7 @@ Recursive binary search tree implementation.
 """
 
 
-class Node:
+class Node(object):
     """
     A binary tree node.
     """
