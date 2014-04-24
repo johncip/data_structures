@@ -73,24 +73,6 @@ class RedBlack(BST):
                                  or self._has_right_red(node.right)))
                 or (node.left and self._has_right_red(node.left)))
 
-    def _symmetric(self, node=None):
-        """
-        Returns true if the subtree rooted at node is in symmetric order.
-        """
-        if node is None:
-            node = self.root
-
-        left_sym = (not node.left
-                    or (node.key > node.left.key
-                        and self._symmetric(node.left)))
-
-        def right_sym():  # for delayed evaluation
-            return (not node.right
-                    or (node.key < node.right.key
-                        and self._symmetric(node.right)))
-
-        return left_sym and right_sym()
-
 
 if __name__ == '__main__':
     pass
