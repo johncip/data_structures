@@ -1,3 +1,9 @@
+"""
+test_bst.py
+
+Unit tests for BST class.
+"""
+
 import random
 
 import pytest

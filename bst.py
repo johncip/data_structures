@@ -1,5 +1,7 @@
 """
-Recursive binary search tree implementation (does not balance on add).
+bst.py
+
+Recursive binary search tree implementation.
 """
 
 
