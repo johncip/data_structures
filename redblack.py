@@ -41,17 +41,9 @@ class RedBlack(BST):
         if node is None:
             node = self.root
 
-        nrr = False
-
-        if node.right:
-            if node.right.red:
-                return True
-            else:
-                nrr = nrr and self._has_right_red(node.right)
-        if node.left:
-            nrr = nrr and self._has_right_red(node.left)
-
-        return nrr
+        return ((node.right and (node.right.red
+                                 or self._has_right_red(node.right)))
+                or (node.left and self._has_right_red(node.left)))
 
 
 if __name__ == '__main__':
