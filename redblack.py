@@ -33,6 +33,26 @@ class RedBlack(BST):
         node.red = True
         return x
 
+    def _has_right_red(self, node=None):
+        """
+        Returns true if the subtree rooted at node contains a right-leaning
+        red link.
+        """
+        if node is None:
+            node = self.root
+
+        nrr = False
+
+        if node.right:
+            if node.right.red:
+                return True
+            else:
+                nrr = nrr and self._has_right_red(node.right)
+        if node.left:
+            nrr = nrr and self._has_right_red(node.left)
+
+        return nrr
+
 
 if __name__ == '__main__':
     pass

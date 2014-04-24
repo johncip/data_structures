@@ -18,7 +18,6 @@ def rb():
 # noinspection PyProtectedMember
 def test_rotate_left():
     # TODO implement symetric order check
-    # TODO implement no right red link check
     rbt = RedBlack('e')
     e_node = rbt.root
     rbt.add('a')
@@ -35,3 +34,16 @@ def test_rotate_left():
     assert s_node.right.key == 'z'
     assert e_node.left.key == 'a'
     assert e_node.right.key == 'j'
+
+def test_has_right_red():
+    rbt = RedBlack('e')
+    rbt.add('a')
+    rbt.add('s')
+    rbt.add('j')
+    rbt.add('z')
+    assert not rbt._has_right_red()
+    s_node = rbt._get(rbt.root, 's')
+    s_node.red = True
+    assert rbt._has_right_red()
+    rbt.root = rbt._rotate_left(rbt.root)
+    assert not rbt._has_right_red()
