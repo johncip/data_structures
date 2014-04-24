@@ -1,22 +1,25 @@
 """
 bst.py
 
-Recursive binary search tree implementation.
+Basic binary search tree.
+Based on Sedgewick's recursive implementation strategy.
 """
 
 
 class Node(object):
     """
-    A binary tree node.
+    A binary tree node. Can also be used with red/black BSTs.
     """
 
-    left = None
-    right = None
-    value = None
-    red = False  # color of parent link
-
-    def __init__(self, k):
+    def __init__(self, k, **kwargs):
         self.key = k
+        self.left = None
+        self.right = None
+        self.value = None
+        self.red = False
+
+        if kwargs.has_key('red'):
+            self.red = kwargs['red']
 
     def __str__(self):
         return str(self.key)
@@ -27,14 +30,13 @@ class BST(object):
     A binary search tree.
     """
 
-    root = None
-
     def __init__(self, **kwargs):
         """
         Initializes a new, empty BST (root is None).
-
-        Optional iterable 'keys' arg: inserts each item into the BST.
+        Optional 'keys' arg: must be iterable, inserts each item into the BST.
         """
+        self.root = None
+
         if kwargs.has_key('keys'):
             for k in kwargs['keys']:
                 self.root = self._add(self.root, k)
@@ -49,18 +51,17 @@ class BST(object):
     def _add(self, node, k):
         """
         Adds a node with key k to the subtree rooted at node.
-        Note: returns parent if parent exists, else new node.
         """
         if not node:
             return Node(k)
+
         if k < node.key:
             node.left = self._add(node.left, k)
-            return node
         elif k > node.key:
             node.right = self._add(node.right, k)
-            return node
-        else:  # k == node.key
-            return node
+
+        return node
+
 
     def _ceil(self, node, k):
         """
@@ -263,7 +264,8 @@ class BST(object):
         Level-order traversal (returns string).
         """
         maxh = self._height(self.root) + 1
-        levels = [self._print_level(self.root, level) for level in range(1, maxh)]
+        levels = [self._print_level(self.root, level) for level in
+                  range(1, maxh)]
         return "\n".join(levels)
 
 
