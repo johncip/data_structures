@@ -27,11 +27,17 @@ class BST(object):
     A binary search tree.
     """
 
-    def __init__(self, k):
+    root = None
+
+    def __init__(self, **kwargs):
         """
-        Creates a new BST with root containing key k.
+        Initializes a new, empty BST (root is None).
+
+        Optional iterable 'keys' arg: inserts each item into the BST.
         """
-        self.root = Node(k)
+        if kwargs.has_key('keys'):
+            for k in kwargs['keys']:
+                self.root = self._add(self.root, k)
 
     def __str__(self):
         return self.level_order()
@@ -206,9 +212,9 @@ class BST(object):
 
     def add(self, k):
         """
-        Adds an entry to the bst instance and returns the node.
+        Adds an entry to the bst instance.
         """
-        return self._add(self.root, k)
+        self.root = self._add(self.root, k)
 
     def ceil(self, k):
         """
