@@ -13,23 +13,23 @@ from bst import BST
 
 @pytest.fixture
 def bst():
-    bst = BST(4)
-    [bst.add(e) for e in [2, 6, 3, 1, 5]]
-    return bst
+    res = BST(4)
+    [res.add(e) for e in [2, 6, 3, 1, 5]]
+    return res
 
 
 def test_inorder():
     nums = range(1, 100)
     random.shuffle(nums)
-    bst = BST(nums[0])
+    t = BST(nums[0])
     for n in nums[1:]:
-        bst.add(n)
+        t.add(n)
     nums.sort()
 
-    assert bst.inorder() == sorted(nums)
+    assert t.inorder() == sorted(nums)
 
 
-def test_unique_queue(bst):
+def test_unique_queue():
     BST(1)
     assert BST(2).inorder() == [2]
 
@@ -38,14 +38,14 @@ def test_floor(bst):
     for i in range(1, 7):
         assert bst.floor(i) == i
     assert bst.floor(7) == 6
-    assert bst.floor(-1) == None
+    assert bst.floor(-1) is None
 
 
 def test_ceil(bst):
     for i in range(1, 7):
         assert bst.ceil(i) == i
     assert bst.ceil(0) == 1
-    assert bst.ceil(7) == None
+    assert bst.ceil(7) is None
 
 
 def test_get(bst):
@@ -97,12 +97,12 @@ def test_delete_random():
     maxx = 200
     nums = range(0, maxx)
     random.shuffle(nums)
-    bst = BST(nums[0])
-    [bst.add(i) for i in nums[1:]]
+    t = BST(nums[0])
+    [t.add(i) for i in nums[1:]]
 
     random.shuffle(nums)
     for i, v in enumerate(nums):
-        bst.delete(v)
-        remaining = bst.inorder()
+        t.delete(v)
+        remaining = t.inorder()
         assert v not in remaining
         assert len(remaining) == maxx - (i + 1)
