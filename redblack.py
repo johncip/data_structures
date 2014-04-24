@@ -65,17 +65,16 @@ class RedBlack(BST):
         if node is None:
             node = self.root
 
-        sym = True
+        left_sym = (not node.left
+                    or (node.key > node.left.key
+                        and self._symmetric(node.left)))
 
-        if node.left:
-            sym = sym and (node.key > node.left.key)
-            sym = sym and self._symmetric(node.left)
+        def right_sym():  # for delayed evaluation
+            return (not node.right
+                    or (node.key < node.right.key
+                        and self._symmetric(node.right)))
 
-        if node.right:
-            sym = sym and (node.key < node.right.key)
-            sym = sym and self._symmetric(node.right)
-
-        return sym
+        return left_sym and right_sym()
 
 
 if __name__ == '__main__':

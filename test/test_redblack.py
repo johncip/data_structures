@@ -9,7 +9,6 @@ import pytest
 from redblack import RedBlack
 
 
-# noinspection PyProtectedMember
 @pytest.fixture
 def rbt():
     res = RedBlack('e')
@@ -30,7 +29,6 @@ def s_node(rbt):
     return res
 
 
-# noinspection PyProtectedMember
 def test_rotate_right(rbt, s_node):
     a_node = rbt._get(rbt.root, 'a')
     a_node.red = True
@@ -38,7 +36,6 @@ def test_rotate_right(rbt, s_node):
     assert rbt.root.key == 'a'
 
 
-# noinspection PyProtectedMember
 def test_rotate_left(rbt, s_node):
     s_node.red = True
     rbt.root = rbt._rotate_left(rbt.root)
@@ -51,7 +48,6 @@ def test_rotate_left(rbt, s_node):
     assert e_node.right.key == 'j'
 
 
-# noinspection PyProtectedMember
 def test_has_right_red(rbt, s_node):
     assert not rbt._has_right_red()
     s_node.red = True
