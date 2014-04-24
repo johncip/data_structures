@@ -9,41 +9,60 @@ import pytest
 from redblack import RedBlack
 
 
+# noinspection PyProtectedMember
 @pytest.fixture
-def rb():
-    res = RedBlack(0)
+def rbt():
+    res = RedBlack('e')
+    res.add('a')
+    res.add('s')
+    res.add('j')
+    res.add('z')
+
+    return res
+
+
+@pytest.fixture
+def s_node(rbt):
+    res = rbt._get(rbt.root, 's')
+    assert res.left.key == 'j'
+    assert res.right.key == 'z'
+
     return res
 
 
 # noinspection PyProtectedMember
-def test_rotate_left():
-    # TODO implement symetric order check
-    rbt = RedBlack('e')
-    e_node = rbt.root
-    rbt.add('a')
-    rbt.add('s')
-    s_node = rbt._get(rbt.root, 's')
-    s_node.red = True
-    rbt.add('j')
-    assert s_node.left.key == 'j'
-    rbt.add('z')
-    assert s_node.right.key == 'z'
+def test_rotate_right(rbt, s_node):
+    a_node = rbt._get(rbt.root, 'a')
+    a_node.red = True
+    rbt.root = rbt._rotate_right(rbt.root)
+    assert rbt.root.key == 'a'
 
+
+# noinspection PyProtectedMember
+def test_rotate_left(rbt, s_node):
+    s_node.red = True
     rbt.root = rbt._rotate_left(rbt.root)
+
     assert s_node.left.key == 'e'
     assert s_node.right.key == 'z'
+
+    e_node = rbt._get(rbt.root, 'e')
     assert e_node.left.key == 'a'
     assert e_node.right.key == 'j'
 
-def test_has_right_red():
-    rbt = RedBlack('e')
-    rbt.add('a')
-    rbt.add('s')
-    rbt.add('j')
-    rbt.add('z')
+
+# noinspection PyProtectedMember
+def test_has_right_red(rbt, s_node):
     assert not rbt._has_right_red()
-    s_node = rbt._get(rbt.root, 's')
     s_node.red = True
     assert rbt._has_right_red()
+
     rbt.root = rbt._rotate_left(rbt.root)
     assert not rbt._has_right_red()
+
+    rbt.root = rbt._rotate_right(rbt.root)
+    assert rbt._has_right_red()
+
+
+def test_symmetric(rbt):
+    assert rbt._symmetric()
