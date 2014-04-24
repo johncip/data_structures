@@ -182,6 +182,24 @@ class BST(object):
             right = self._print_level(node.right, level - 1)
             return str(left) + str(right)
 
+    def _symmetric(self, node=None):
+        """
+        Returns true if the subtree rooted at node is in symmetric order.
+        """
+        if node is None:
+            node = self.root
+
+        left_sym = (not node.left
+                    or (node.key > node.left.key
+                        and self._symmetric(node.left)))
+
+        def right_sym():  # for delayed evaluation
+            return (not node.right
+                    or (node.key < node.right.key
+                        and self._symmetric(node.right)))
+
+        return left_sym and right_sym()
+
     #-------------------------------------------------------------------------
     # Public API
     #-------------------------------------------------------------------------
