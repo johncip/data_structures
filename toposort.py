@@ -3,8 +3,6 @@ toposort.py
 
 Topological sort using DFS method.
 
-Based on the Talentbuddy problem.
-
 """
 
 from collections import defaultdict
